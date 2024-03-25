@@ -1,0 +1,64 @@
+
+Find All Duplicates in an Array
+
+
+1. Using another Array to store frequency of each item (54.58MB and 3 Seconds)
+
+class Solution {
+    public List<Integer> findDuplicates(int[] nums) {
+        int[] count = new int[nums.length+1];
+        List<Integer> listOfInteger = new ArrayList<>();
+
+        for(int i = 0 ;i<nums.length;i++){
+            count[nums[i]]++;
+        }
+        for(int i = 0 ;i<count.length;i++){
+           if(count[i] >=2){
+            listOfInteger.add(i);
+           }
+        }
+
+        return listOfInteger;
+    }
+}
+
+
+2. Using HashMap to store count for each element (55.57MB and 26ms)
+
+final List<Integer> duplicates = new ArrayList<Integer>();
+       final Map<Integer,Integer> mapOfCounts = new HashMap<>();
+       for(int i = 0; i < nums.length; i++) {
+            if(mapOfCounts.get(nums[i]) != null){
+                    mapOfCounts.put( nums[i],mapOfCounts.get(nums[i])+1);
+            } else {
+                    mapOfCounts.put( nums[i],1);
+            }
+        }
+
+        for( Map.Entry<Integer, Integer> pair  : mapOfCounts.entrySet()){
+            if(mapOfCounts.get(pair.getKey()) >=2){
+                duplicates.add(pair.getKey());
+            }
+        }
+        return duplicates;
+    }
+
+3. Using Math.abs to negate the repeating numbers (55.07 MB and 6mS) . Also the accepted solution since we are required to solve this problem in constant space and time complexity expected is O(n)
+
+class Solution {
+    public List<Integer> findDuplicates(int[] nums) {
+       final List<Integer> duplicates = new ArrayList<Integer>();
+       for(int i = 0; i < nums.length; i++) {
+            int n = Math.abs(nums[i]);
+            if(nums[n - 1] < 0) {
+                duplicates.add(n);
+            } else {
+                nums[n - 1] *= -1;
+            }
+
+        }
+        return duplicates;
+
+    }
+}
+
